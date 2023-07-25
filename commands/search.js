@@ -1,7 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js');
 const axios = require('axios');
 const cheerio = require("cheerio");
-const classConfig = require("../config.json")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('search')
@@ -16,9 +15,10 @@ module.exports = {
 
 		const args = interaction.options.get('user').value.split('#');
 
-		const url = `https://tracker.gg/valorant/profile/riot/${args[0]}%23${args[1]}/overview?playlist=competitive&season=all`;
+		args[0] = args[0].replaceAll(" ", "%20")
 
-		
+
+		const url = `https://tracker.gg/valorant/profile/riot/${args[0]}%23${args[1]}/overview?playlist=competitive&season=all`;
 
 		try {
 			await axios.get(url)
